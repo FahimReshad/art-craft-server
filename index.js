@@ -84,7 +84,7 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
-
+    
     app.get("/artCraft/:subCategoryName", async (req, res) => {
       // console.log(req.params.email);
       const cursor = craftCollection.find({
