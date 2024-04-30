@@ -44,6 +44,8 @@ async function run() {
       res.send(result);
     })
 
+
+
     
 
 
@@ -89,6 +91,13 @@ async function run() {
     app.get("/myProduct/:email", async(req, res) => {
       // console.log(req.params.email);
       const cursor = craftCollection.find({email: req.params.email});
+      const result = await cursor.toArray();
+      res.send(result)
+    })
+
+    app.get("/artCraft/:subCategoryName", async(req, res) => {
+      // console.log(req.params.email);
+      const cursor = craftCollection.find({subCategoryName: req.params.subCategoryName});
       const result = await cursor.toArray();
       res.send(result)
     })
