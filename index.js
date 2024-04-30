@@ -9,8 +9,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rpkd5x3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -29,25 +27,18 @@ async function run() {
 
     const craftCollection = client.db("craftDB").collection("craft");
 
-
-    app.get("/craft", async(req, res) => {
+    app.get("/craft", async (req, res) => {
       const cursor = craftCollection.find();
       const result = await cursor.toArray();
-      res.send(result)
-    })
+      res.send(result);
+    });
 
-    app.get("/craft/:id", async(req, res) =>{
+    app.get("/craft/:id", async (req, res) => {
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)};
+      const query = { _id: new ObjectId(id) };
       const result = await craftCollection.findOne(query);
       res.send(result);
-    })
-
-
-
-    
-
-
+    });
 
     app.post("/craft", async (req, res) => {
       const newCraft = req.body;
@@ -77,7 +68,7 @@ async function run() {
         },
       };
       const result = await craftCollection.updateOne(filter, coffee, options);
-      res.send(result)
+      res.send(result);
     });
 
     app.delete("/delete/:id", async (req, res) => {
@@ -87,19 +78,21 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/myProduct/:email", async(req, res) => {
+    app.get("/myProduct/:email", async (req, res) => {
       // console.log(req.params.email);
-      const cursor = craftCollection.find({email: req.params.email});
+      const cursor = craftCollection.find({ email: req.params.email });
       const result = await cursor.toArray();
-      res.send(result)
-    })
+      res.send(result);
+    });
 
-    app.get("/artCraft/:subCategoryName", async(req, res) => {
+    app.get("/artCraft/:subCategoryName", async (req, res) => {
       // console.log(req.params.email);
-      const cursor = craftCollection.find({subCategoryName: req.params.subCategoryName});
+      const cursor = craftCollection.find({
+        subCategoryName: req.params.subCategoryName,
+      });
       const result = await cursor.toArray();
-      res.send(result)
-    })
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
